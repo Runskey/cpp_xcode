@@ -10,8 +10,13 @@
 #include <vector>
 #include <array>
 #include <string>
+#include <limits>
+#include "operator_overloadder.hpp"
 
 using namespace std;
+
+const bool OPERATOR_OVERLOADDER = false;
+const bool NUMERIC_LIMITS = true;
 
 template <class T>
 T GetMax(T a, T b)
@@ -63,11 +68,44 @@ int main(int argc, const char * argv[]) {
   cout << "Output from template function: " << GetMax(5, 6) << endl;
    
    */
+  
+  
+  /*
 label:
   cout << "Hello" << endl;
   A a;
   if (i--)
     goto label;
+   */
+  
+  // test operator over-loadding
+  if (OPERATOR_OVERLOADDER) {
+    operator_overloadder t0, t1(3);
+    operator_overloadder t2(t1);
+    cout << t0 << t1 << t2;
+    cin >> t1;
+    t2 = t1;
+    t2 += t1;
+    t1 += 10;
+    cout << t2;
+    if(t1 < t2) cout << "t1 < t2";
+    else if(t1 == t2) cout << "t1 = t2";
+    else /* t1 > t2*/ cout << "t1 > t2";
+    cout <<endl;
+  }
+
+  
+  // use of numeric_limits
+  if (NUMERIC_LIMITS) {
+    cout << "max(short): " << numeric_limits<short>::max() << endl;
+    cout << "min(short): " << numeric_limits<short>::min() << endl;
+    cout << "max(int): " << numeric_limits<int>::max() << endl;
+    cout << "min(int): " << numeric_limits<int>::min() << endl;
+    cout << "max(long): " << numeric_limits<long>::max() << endl;
+    cout << "min(long): " << numeric_limits<long>::min() << endl;
+    cout << endl;
+  }
+  
   
   return 0;
 }
