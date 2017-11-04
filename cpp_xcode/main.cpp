@@ -12,11 +12,17 @@
 #include <string>
 #include <limits>
 #include "operator_overloadder.hpp"
+#include "unknown_type_handling.hpp"
+#include "polymorphism.hpp"
+#include "prevent_inherit_without_final.hpp"
 
 using namespace std;
 
 const bool OPERATOR_OVERLOADDER = false;
-const bool NUMERIC_LIMITS = true;
+const bool NUMERIC_LIMITS = false;
+const bool UNKNOWN_RETURN_TYPE = false;
+const bool POLYMORPHISM = false;
+const bool PREVENT_INHERIT = true;
 
 template <class T>
 T GetMax(T a, T b)
@@ -106,6 +112,36 @@ label:
     cout << endl;
   }
   
+  // unknow return type
+  if (UNKNOWN_RETURN_TYPE) {
+      cout << "INT * INT returns " << unknown_return_type<int, int>(3.1, 3.1) << endl;
+      cout << "INT * FLOAT returns " << unknown_return_type<int, float>(3.1, 3.1) << endl;
+      
+      int arr[5] = {0};
+      decltype(arr) var1;
+      cout << (typeid(var1) == typeid(int)) << endl;
+      cout << (typeid(var1) == typeid(int *)) << endl;
+      cout << (typeid(var1) == typeid(int[5])) << endl;
+      cout << (typeid(var1) == typeid(int[])) << endl;
+  }
   
+    if (POLYMORPHISM) {
+        DerivedClass1 d1;
+        DerivedClass2 d2;
+        
+        BaseClass &b1 = d1;
+        b1.print();
+        BaseClass &b2 = d2;
+        b2.print();
+        
+        Interface(d1);
+        Interface(d2);
+    }
+    
+    if (PREVENT_INHERIT) {
+        //finalClass b;
+        Derivation c;
+    }
+    
   return 0;
 }
