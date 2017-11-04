@@ -47,5 +47,7 @@ public:
 
 
 void Interface(BaseClass &b);
+void Interface_p(BaseClass *b);
+void TruncClass(BaseClass b);
 
 #endif /* polymorphism_hpp */

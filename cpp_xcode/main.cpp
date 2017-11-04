@@ -21,8 +21,8 @@ using namespace std;
 const bool OPERATOR_OVERLOADDER = false;
 const bool NUMERIC_LIMITS = false;
 const bool UNKNOWN_RETURN_TYPE = false;
-const bool POLYMORPHISM = false;
-const bool PREVENT_INHERIT = true;
+const bool POLYMORPHISM = true;
+const bool PREVENT_INHERIT = false;
 
 template <class T>
 T GetMax(T a, T b)
@@ -136,6 +136,12 @@ label:
         
         Interface(d1);
         Interface(d2);
+        
+        TruncClass(d1);
+        TruncClass(d2);
+        
+        Interface_p(&d1);
+        Interface_p(&d2);
     }
     
     if (PREVENT_INHERIT) {

@@ -12,3 +12,13 @@ void Interface(BaseClass &b)
 {
     b.print();
 }
+
+void TruncClass(BaseClass b)
+{
+    b.print();
+}
+
+void Interface_p(BaseClass *b)
+{
+    b->print();
+}
