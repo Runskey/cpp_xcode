@@ -15,14 +15,16 @@
 #include "unknown_type_handling.hpp"
 #include "polymorphism.hpp"
 #include "prevent_inherit_without_final.hpp"
+#include "use_shared_ptr.hpp"
 
 using namespace std;
 
 const bool OPERATOR_OVERLOADDER = false;
 const bool NUMERIC_LIMITS = false;
 const bool UNKNOWN_RETURN_TYPE = false;
-const bool POLYMORPHISM = true;
+const bool POLYMORPHISM = false;
 const bool PREVENT_INHERIT = false;
+const bool USE_SHARED_PTR = true;
 
 template <class T>
 T GetMax(T a, T b)
@@ -40,7 +42,19 @@ public:
 
 int i = 1;
 
+/*
+const std::vector<int>& get_ints()
+{
+    std::vector<int> i{ 0, 1, 2, 3 };
+    return i;
+}
+*/
 
+std::vector<int>& get_ints() // notice it's missing the const!
+{
+    std::vector<int> i{ 0, 1, 2, 3 };
+    return i;
+}
 
 int main(int argc, const char * argv[]) {
   // insert code here...
@@ -147,6 +161,19 @@ label:
     if (PREVENT_INHERIT) {
         //finalClass b;
         Derivation c;
+    }
+    
+    if (USE_SHARED_PTR) {
+        shared_ptr<implementation> sp (new implementation());
+        //sp = check_shared_ptr(move(sp));
+        sp = check_shared_ptr(sp);
+        cout << "Object has " << sp.use_count() << " references" << endl;
+        check_shared_ptr(move(sp));
+        cout << "Object has " << sp.use_count() << " references" << endl;
+
+        //cout << "------------" << endl;
+        //check_shared_ptr(shared_ptr<implementation>(new implementation()));
+        //cout << "------------" << endl;
     }
     
   return 0;
